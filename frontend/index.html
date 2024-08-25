@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enter Name</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="loginContainer">
+      <h2>Enter your name to join the chat</h2>
+      <input type="text" id="usernameInput" placeholder="Your name" />
+      <button id="joinChatBtn">Join Chat</button>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const joinChatBtn = document.getElementById("joinChatBtn");
+        const usernameInput = document.getElementById("usernameInput");
+
+        // Check if the username is already stored in localStorage
+        if (localStorage.getItem("username")) {
+          // Redirect to chat page if username is already saved
+          window.location.href = "chat.html";
+        }
+
+        joinChatBtn.addEventListener("click", () => {
+          const username = usernameInput.value.trim();
+          if (username) {
+            // Save the username in localStorage and redirect to chat page
+            localStorage.setItem("username", username);
+            window.location.href = "chat.html";
+          } else {
+            alert("Please enter your name.");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
