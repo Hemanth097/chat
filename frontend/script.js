@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initializeWebSocket();
     } else {
         // Redirect to the name input page if no username is found
-        window.location.href = 'index.html';
+        window.location.href = '/';
     }
 
     leaveChatBtn.addEventListener('click', () => {
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         localStorage.removeItem('username'); // Clear the username from cache when leaving
         chatContainer.classList.add('hidden');
-        window.location.href = 'index.html';
+        window.location.href = '/';
         chatArea.innerHTML = '';
     });
 
@@ -36,8 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function initializeWebSocket() {
-        socket = new WebSocket('ws://13b3-27-6-105-52.ngrok-free.app');
-
+        socket = new WebSocket('wss://161d-27-6-169-190.ngrok-free.app/chatbs');
 
         socket.onopen = () => {
             console.log('Connected to WebSocket server.');

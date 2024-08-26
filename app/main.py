@@ -1,5 +1,8 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+import os
 
 app = FastAPI()
 
@@ -20,7 +23,7 @@ class ConnectionManager:
 
 manager = ConnectionManager()
 
-@app.websocket("/chat")
+@app.websocket("/chatbs")
 async def chat(websocket: WebSocket):
     await manager.connect(websocket)
     try:
@@ -31,16 +34,27 @@ async def chat(websocket: WebSocket):
         manager.disconnect(websocket)
         await manager.broadcast("A user has left the chat")
 
+app.mount("/static", StaticFiles(directory="frontend"), name="static")
+
+
 @app.get("/")
-async def get():
-    return HTMLResponse("""
-    <html>
-        <head>
-            <title>Chat</title>
-        </head>
-        <body>
-            <h1>Welcome to FastAPI WebSocket Chat</h1>
-            <p>Use the front-end interface to connect to the chat.</p>
-        </body>
-    </html>
-    """)
+async def index():
+    return FileResponse(os.path.join("frontend", "index.html"))
+
+@app.get("/index.html")
+async def indexhtml():
+    return FileResponse(os.path.join("frontend", "index.html"))
+
+@app.get("/chat")
+async def chat():
+    return FileResponse(os.path.join("frontend", "chat.html"))
+
+@app.get("/styles")
+async def chat():
+    return FileResponse(os.path.join("frontend", "styles.css"))
+
+
+@app.get("/script")
+async def chat():
+    return FileResponse(os.path.join("frontend", "script.js"))
+
